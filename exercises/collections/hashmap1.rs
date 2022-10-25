@@ -21,7 +21,8 @@ fn fruit_basket() -> HashMap<String, u32> {
     basket.insert(String::from("banana"), 2);
 
     // TODO: Put more fruits in your basket here.
-
+    basket.entry("apple".to_owned()).and_modify(|x| *x += 2).or_insert(2);
+    basket.entry("mango".to_owned()).and_modify(|x| *x += 2).or_insert(2);
     basket
 }
 
