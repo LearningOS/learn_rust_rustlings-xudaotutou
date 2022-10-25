@@ -43,7 +43,11 @@ impl From<ParseIntError> for ParseClimateError {
 }
 impl Error for ParseClimateError {
     fn source(&self) -> Option<&(dyn Error + 'static)> {
-        None
+        match self {
+            ParseClimateError::ParseInt(e) => Some(e),
+            ParseClimateError::ParseFloat(e) => Some(e),
+            _=>None
+        }
     }
 }
 // This `From` implementation allows the `?` operator to work on
@@ -204,7 +208,7 @@ mod test {
         );
     }
     #[test]
-    #[ignore]
+    // #[ignore]
     fn test_downcast() {
         let res = "São Paulo,-21,28.5".parse::<Climate>();
         assert!(matches!(res, Err(ParseClimateError::ParseInt(_))));
